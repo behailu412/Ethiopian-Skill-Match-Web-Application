@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Skill Match System - Admin Dashboard</title>
+    <link rel="icon" href="images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        /* Top Header */
+        .header {
+            background: #007be8;
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 67px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-section img {
+            width: 35px;
+            height: 35px;
+        }
+        
+        .logo-section h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-header {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-logout {
+            background: #c0392b;
+            font-weight: bold;
+            padding: 8px 20px;
+        }
+        
+        .btn-header:hover {
+            opacity: 0.9;
+        }
+        
+        /* Main Container */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 67px);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 276px;
+            background: #8d969e;
+            padding: 20px 10px 10px 10px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-section h3 {
+            color: #021011;
+            font-size: 18px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .nav-btn {
+            width: 100%;
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: background 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+        
+        .nav-icon {
+            width: 46px;
+            height: 37px;
+            position: relative;
+        }
+        
+        .nav-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.9;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #e74c3c;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+        
+        .separator {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 20px 0;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        /* Section Header */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-header img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .count-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #ecf0f1;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            color: #2c3e50;
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-view {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-reject {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-approve {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-search {
+            background: #2980b9;
+            color: white;
+        }
+        
+        .btn-reset {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-add {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-generate {
+            background: #2980b9;
+            color: white;
+        }
+        
+        .btn-update {
+            background: #2980b9;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Action Buttons Container */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #7f8c8d;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 3px;
+            font-size: 14px;
+            background: #f8f9fa;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+        }
+        
+        /* Stats Cards */
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .stat-card.green {
+            border-left-color: #27ae60;
+        }
+        
+        .stat-card.yellow {
+            border-left-color: #f39c12;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        /* Charts Container */
+        .charts-container {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .chart-box {
+            flex: 1;
+            border: 1px solid #ecf0f1;
+            border-radius: 5px;
+            padding: 20px;
+            background: white;
+        }
+        
+        .chart-title {
+            padding: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 1px solid #ecf0f1;
+            margin-bottom: 20px;
+        }
+        
+        .chart-placeholder {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        /* Settings Section */
+        .settings-section {
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+        
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .settings-header img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .settings-header h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+        
+        .checkbox-group label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .help-text {
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        /* Message Display */
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.error {
+            background: #ffe6e6;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+            display: block;
+        }
+        
+        .message.success {
+            background: #e6ffe6;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+            display: block;
+        }
+        
+        /* Lists */
+        .list-container {
+            background: #f8f9fa;
+            border: 1px solid #ecf0f1;
+            border-radius: 5px;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .list-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            background: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .list-item:hover {
+            background: #e9ecef;
+        }
+        
+        .list-item.selected {
+            background: #007be8;
+            color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid #34495e;
+            margin-top: 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                flex: 1;
+                min-width: 150px;
+            }
+            
+            .stats-container,
+            .charts-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                height: auto;
+                padding: 15px 0;
+            }
+            
+            .header-actions {
+                margin-top: 15px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="images/logo.png" alt="Logo">
+                <h1>ADMINISTRATOR PORTAL</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn-header" onclick="handleRefresh()">↻ Refresh</button>
+                <button class="btn-header btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>MAIN MENU</h3>
+                <button class="nav-btn active" onclick="showSection('verification')">
+                    <div class="nav-icon">
+                        <img src="images/verify-icon.png" alt="Verify">
+                        <div class="notification-badge" id="notificationBadge"></div>
+                    </div>
+                    Verification
+                </button>
+                <button class="nav-btn" onclick="showSection('users')">
+                    <div class="nav-icon">
+                        <img src="images/users-icon.png" alt="Users">
+                    </div>
+                    User Management
+                </button>
+                <button class="nav-btn" onclick="showSection('services')">
+                    <div class="nav-icon">
+                        <img src="images/skill-icon.png" alt="Skills">
+                    </div>
+                    Service Skills
+                </button>
+                <button class="nav-btn" onclick="showSection('cities')">
+                    <div class="nav-icon">
+                        <img src="images/location-icon.png" alt="Cities">
+                    </div>
+                    Locations
+                </button>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <div class="sidebar-section">
+                <h3>ANALYTICS AND CONFIG</h3>
+                <button class="nav-btn" onclick="showSection('reports')">
+                    <div class="nav-icon">
+                        <img src="images/stats-icon.png" alt="Reports">
+                    </div>
+                    Reports
+                </button>
+                <button class="nav-btn" onclick="showSection('settings')">
+                    <div class="nav-icon">
+                        <img src="images/settings-icon.jpg" alt="Settings">
+                    </div>
+                    Settings
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- 1. Verification Section -->
+            <div class="content-section active" id="verification-section">
+                <div class="section-header">
+                    <img src="images/approvals.png" alt="Approvals">
+                    <div>
+                        <div class="section-title">Pending Provider Approvals</div>
+                        <div class="count-badge" id="pendingCount">0 Pending</div>
+                    </div>
+                </div>
+                
+                <table class="data-table" id="verificationTable">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>Skill</th>
+                            <th>Payment Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="verificationTableBody">
+                        <!-- Providers will be loaded here -->
+                    </tbody>
+                </table>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-view" onclick="viewProviderDetail()">View Detail</button>
+                    <button class="btn btn-reject" onclick="rejectProvider()">Reject Selected</button>
+                    <button class="btn btn-approve" onclick="approveProvider()">Approve Selected</button>
+                </div>
+            </div>
+
+            <!-- 2. Users Section -->
+            <div class="content-section" id="users-section">
+                <div class="section-header">
+                    <img src="images/users.jpg" alt="Users">
+                    <div class="section-title">User Directory</div>
+                    <div style="flex: 1; text-align: right;">
+                        <div class="search-container">
+                            <input type="text" class="search-input" id="searchUserField" 
+                                   placeholder="Search user by name or phone...">
+                            <button class="btn btn-search" onclick="searchUsers()">Search</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="data-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                    <div id="totalUserCount">Total Users: 0</div>
+                    <div class="action-buttons">
+                        <button class="btn btn-reset" onclick="resetUserPassword()">Reset Password</button>
+                        <button class="btn btn-delete" onclick="deleteUser()">Delete User</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Services Section -->
+            <div class="content-section" id="services-section">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="images/profesions.jpg" alt="Professions" style="width: 50px; height: 50px;">
+                            <div>
+                                <div class="section-title">Existing Categories</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 20px;">
+                    <!-- Left: List -->
+                    <div style="flex: 1;">
+                        <div class="list-container" id="skillsList">
+                            <!-- Skills will be loaded here -->
+                        </div>
+                        <button class="btn btn-delete" onclick="deleteSkill()">Delete Selected Category</button>
+                    </div>
+                    
+                    <!-- Right: Add Form -->
+                    <div style="width: 350px;">
+                        <div class="settings-header">
+                            <h3>Add New Skill</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Skill Name:</label>
+                            <input type="text" class="form-control" id="newSkillField" 
+                                   placeholder="e.g. Plumbing, Electrician">
+                        </div>
+                        <button class="btn btn-add" onclick="addSkill()">Add Category</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Cities Section -->
+            <div class="content-section" id="cities-section">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="images/city.jpg" alt="Cities" style="width: 80px; height: 50px;">
+                            <div>
+                                <div class="section-title">Registered Cities</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 20px;">
+                    <!-- Left: List -->
+                    <div style="flex: 1;">
+                        <div class="list-container" id="citiesList">
+                            <!-- Cities will be loaded here -->
+                        </div>
+                        <button class="btn btn-delete" onclick="deleteCity()">Delete Selected City</button>
+                    </div>
+                    
+                    <!-- Right: Add Form -->
+                    <div style="width: 350px;">
+                        <div class="settings-header">
+                            <h3>Add New City</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>City Name:</label>
+                            <input type="text" class="form-control" id="newCityField" 
+                                   placeholder="e.g. Addis Ababa, Adama">
+                        </div>
+                        <button class="btn btn-add" onclick="addCity()">Add City</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Reports Section -->
+            <div class="content-section" id="reports-section">
+                <div class="section-header">
+                    <img src="images/reports.png" alt="Reports">
+                    <div class="section-title">System Analytics</div>
+                    <div style="flex: 1; text-align: right;">
+                        <div style="display: flex; align-items: center; gap: 10px; justify-content: flex-end;">
+                            <label style="font-weight: bold; color: #7f8c8d;">Export Format:</label>
+                            <select class="form-control" id="reportFormat" style="width: 200px;">
+                                <option value="detailed">Detailed Data Tables (HTML)</option>
+                                <option value="general">General Summary (HTML)</option>
+                            </select>
+                            <button class="btn btn-generate" onclick="generateReport()">Generate Report</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Users</div>
+                        <div class="stat-number" id="totalUsers">0</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-label">Total Bookings</div>
+                        <div class="stat-number" id="totalBookings">0</div>
+                    </div>
+                    <div class="stat-card yellow">
+                        <div class="stat-label">Active Providers</div>
+                        <div class="stat-number" id="activeProviders">0</div>
+                    </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="charts-container">
+                    <div class="chart-box">
+                        <div class="chart-title">User Role Distribution</div>
+                        <div class="chart-placeholder" id="userDistributionChart">
+                            Chart will appear here
+                        </div>
+                    </div>
+                    <div class="chart-box">
+                        <div class="chart-title">Top Requested Skills</div>
+                        <div class="chart-placeholder" id="topSkillsChart">
+                            Chart will appear here
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Settings Section -->
+            <div class="content-section" id="settings-section">
+                <!-- System Configuration -->
+                <div class="settings-section">
+                    <div class="settings-header">
+                        <img src="images/config-icon.png" alt="Config">
+                        <h3>System Configuration</h3>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="autoVerifyCheckbox" onchange="toggleAutoVerify()">
+                        <label for="autoVerifyCheckbox">Enable Provider Auto-Verification</label>
+                        <div class="help-text">
+                            If enabled, new providers will be automatically approved without requiring admin verification. Use with caution.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Settings -->
+                <div class="settings-section">
+                    <div class="settings-header">
+                        <img src="images/lock-icon.png" alt="Security">
+                        <h3>Security Settings</h3>
+                    </div>
+                    
+                    <div id="settingsMessage" class="message"></div>
+                    
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" 
+                               placeholder="Enter current password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control" id="newPassword" 
+                               placeholder="Enter new password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" 
+                               placeholder="Repeat new password">
+                    </div>
+                    
+                    <button class="btn btn-update" onclick="updatePassword()">Update Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <div>System Status: Online</div>
+            <div>|</div>
+            <div>© 2024 Ethiopian Skill Match System - Admin Console</div>
+        </div>
+    </div>
+    
+    <!-- Provider Detail Modal -->
+    <div class="modal-overlay" id="providerDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Provider Details</h3>
+                <button class="close-modal" onclick="closeDetailModal()">×</button>
+            </div>
+            <div class="modal-content">
+                <div id="providerDetailContent">
+                    <!-- Provider details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedProviderId = null;
+        let selectedUserId = null;
+        let selectedSkill = null;
+        let selectedCity = null;
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadVerificationData();
+            loadUsers();
+            loadSkills();
+            loadCities();
+            loadReportData();
+            loadSettings();
+        });
+        
+        function checkAuth() {
+            const user = sessionStorage.getItem('user');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            if (userData.role !== 'Admin') {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Navigation Functions
+        function showSection(sectionId) {
+            // Update active nav button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show selected section
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId + '-section').classList.add('active');
+            
+            // Load section data if needed
+            switch(sectionId) {
+                case 'verification':
+                    loadVerificationData();
+                    break;
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'services':
+                    loadSkills();
+                    break;
+                case 'cities':
+                    loadCities();
+                    break;
+                case 'reports':
+                    loadReportData();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+            }
+        }
+        
+        function handleRefresh() {
+            showSection('verification');
+        }
+        
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+        
+        // 1. Verification Functions
+        function loadVerificationData() {
+            fetch('AdminServlet?action=getPendingProviders')
+                .then(response => response.json())
+                .then(providers => {
+                    const tbody = document.getElementById('verificationTableBody');
+                    tbody.innerHTML = '';
+                    
+                    providers.forEach(provider => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td><input type="radio" name="providerSelect" value="${provider.id}" onclick="selectProvider(${provider.id})"> ${provider.fullName}</td>
+                            <td>${provider.phone}</td>
+                            <td>${provider.city}</td>
+                            <td>${provider.skill}</td>
+                            <td>${provider.paymentType}</td>
+                            <td>${provider.status}</td>
+                            <td><button class="btn btn-view" onclick="viewProviderDetail(${provider.id})">View</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    
+                    document.getElementById('pendingCount').textContent = providers.length + ' Pending';
+                    
+                    // Show notification badge if there are pending providers
+                    const badge = document.getElementById('notificationBadge');
+                    if (providers.length > 0) {
+                        badge.style.display = 'block';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                });
+        }
+        
+        function selectProvider(providerId) {
+            selectedProviderId = providerId;
+        }
+        
+        function viewProviderDetail(providerId) {
+            if (!providerId) {
+                const selected = document.querySelector('input[name="providerSelect"]:checked');
+                if (!selected) {
+                    alert('Please select a provider first.');
+                    return;
+                }
+                providerId = selected.value;
+            }
+            
+            fetch(`AdminServlet?action=getProviderDetail&id=${providerId}`)
+                .then(response => response.json())
+                .then(provider => {
+                    const content = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img src="${provider.photoPath || 'images/user-icon.png'}" 
+                                 alt="Profile" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="color: #2d5aa0; text-align: center;">${provider.fullName}</h3>
+                            <p style="text-align: center; color: #666;">${provider.skill} • ${provider.city}</p>
+                        </div>
+                        <div style="background: #f4f4f4; padding: 15px; border-radius: 5px;">
+                            <h4>Description:</h4>
+                            <p>${provider.description || 'No description provided.'}</p>
+                        </div>
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button class="btn btn-approve" onclick="approveProvider(${provider.id})">Approve</button>
+                            <button class="btn btn-reject" onclick="rejectProvider(${provider.id})" style="margin-left: 10px;">Reject</button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('providerDetailContent').innerHTML = content;
+                    document.getElementById('providerDetailModal').style.display = 'block';
+                });
+        }
+        
+        function closeDetailModal() {
+            document.getElementById('providerDetailModal').style.display = 'none';
+        }
+        
+        function approveProvider(providerId) {
+            if (!providerId) {
+                if (!selectedProviderId) {
+                    alert('Please select a provider first.');
+                    return;
+                }
+                providerId = selectedProviderId;
+            }
+            
+            if (!confirm('Are you sure you want to approve this provider?')) {
+                return;
+            }
+            
+            fetch('AdminServlet?action=approveProvider&id=' + providerId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Provider approved successfully!');
+                        loadVerificationData();
+                        closeDetailModal();
+                    } else {
+                        alert(data.message || 'Failed to approve provider.');
+                    }
+                });
+        }
+        
+        function rejectProvider(providerId) {
+            if (!providerId) {
+                if (!selectedProviderId) {
+                    alert('Please select a provider first.');
+                    return;
+                }
+                providerId = selectedProviderId;
+            }
+            
+            if (!confirm('Are you sure you want to reject this provider?')) {
+                return;
+            }
+            
+            fetch('AdminServlet?action=rejectProvider&id=' + providerId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Provider rejected successfully!');
+                        loadVerificationData();
+                        closeDetailModal();
+                    } else {
+                        alert(data.message || 'Failed to reject provider.');
+                    }
+                });
+        }
+        
+        // 2. User Management Functions
+        function loadUsers() {
+            fetch('AdminServlet?action=getUsers')
+                .then(response => response.json())
+                .then(users => {
+                    const tbody = document.getElementById('usersTableBody');
+                    tbody.innerHTML = '';
+                    
+                    users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td><input type="radio" name="userSelect" value="${user.id}" onclick="selectUser(${user.id})"> ${user.id}</td>
+                            <td>${user.fullName}</td>
+                            <td>${user.phone}</td>
+                            <td>${user.role}</td>
+                            <td>${user.status}</td>
+                            <td>
+                                <button class="btn btn-reset" onclick="resetUserPassword(${user.id})">Reset</button>
+                                <button class="btn btn-delete" onclick="deleteUser(${user.id})" style="margin-left: 5px;">Delete</button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    
+                    document.getElementById('totalUserCount').textContent = `Total Users: ${users.length}`;
+                });
+        }
+        
+        function selectUser(userId) {
+            selectedUserId = userId;
+        }
+        
+        function searchUsers() {
+            const searchTerm = document.getElementById('searchUserField').value.trim();
+            fetch(`AdminServlet?action=searchUsers&term=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(users => {
+                    const tbody = document.getElementById('usersTableBody');
+                    tbody.innerHTML = '';
+                    
+                    users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td><input type="radio" name="userSelect" value="${user.id}" onclick="selectUser(${user.id})"> ${user.id}</td>
+                            <td>${user.fullName}</td>
+                            <td>${user.phone}</td>
+                            <td>${user.role}</td>
+                            <td>${user.status}</td>
+                            <td>
+                                <button class="btn btn-reset" onclick="resetUserPassword(${user.id})">Reset</button>
+                                <button class="btn btn-delete" onclick="deleteUser(${user.id})" style="margin-left: 5px;">Delete</button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                });
+        }
+        
+        function resetUserPassword(userId) {
+            if (!userId) {
+                if (!selectedUserId) {
+                    alert('Please select a user first.');
+                    return;
+                }
+                userId = selectedUserId;
+            }
+            
+            const newPassword = prompt('Enter new password for this user:');
+            if (!newPassword) return;
+            
+            if (newPassword.trim().length < 6) {
+                alert('Password must be at least 6 characters.');
+                return;
+            }
+            
+            fetch('AdminServlet?action=resetPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `userId=${userId}&newPassword=${encodeURIComponent(newPassword)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Password reset successfully!');
+                } else {
+                    alert(data.message || 'Failed to reset password.');
+                }
+            });
+        }
+        
+        function deleteUser(userId) {
+            if (!userId) {
+                if (!selectedUserId) {
+                    alert('Please select a user first.');
+                    return;
+                }
+                userId = selectedUserId;
+            }
+            
+            if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                return;
+            }
+            
+            fetch('AdminServlet?action=deleteUser&id=' + userId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('User deleted successfully!');
+                        loadUsers();
+                    } else {
+                        alert(data.message || 'Failed to delete user.');
+                    }
+                });
+        }
+        
+        // 3. Skills Functions
+        function loadSkills() {
+            fetch('AdminServlet?action=getSkills')
+                .then(response => response.json())
+                .then(skills => {
+                    const list = document.getElementById('skillsList');
+                    list.innerHTML = '';
+                    
+                    skills.forEach(skill => {
+                        const item = document.createElement('div');
+                        item.className = 'list-item';
+                        item.textContent = skill;
+                        item.onclick = function() {
+                            // Remove selection from other items
+                            document.querySelectorAll('#skillsList .list-item').forEach(el => {
+                                el.classList.remove('selected');
+                            });
+                            this.classList.add('selected');
+                            selectedSkill = skill;
+                        };
+                        list.appendChild(item);
+                    });
+                });
+        }
+        
+        function addSkill() {
+            const skillName = document.getElementById('newSkillField').value.trim();
+            if (!skillName) {
+                alert('Please enter a skill name.');
+                return;
+            }
+            
+            fetch('AdminServlet?action=addSkill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `skillName=${encodeURIComponent(skillName)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Skill added successfully!');
+                    document.getElementById('newSkillField').value = '';
+                    loadSkills();
+                } else {
+                    alert(data.message || 'Failed to add skill.');
+                }
+            });
+        }
+        
+        function deleteSkill() {
+            if (!selectedSkill) {
+                alert('Please select a skill to delete.');
+                return;
+            }
+            
+            if (!confirm(`Are you sure you want to delete "${selectedSkill}"?`)) {
+                return;
+            }
+            
+            fetch('AdminServlet?action=deleteSkill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `skillName=${encodeURIComponent(selectedSkill)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Skill deleted successfully!');
+                    selectedSkill = null;
+                    loadSkills();
+                } else {
+                    alert(data.message || 'Failed to delete skill.');
+                }
+            });
+        }
+        
+        // 4. Cities Functions
+        function loadCities() {
+            fetch('AdminServlet?action=getCities')
+                .then(response => response.json())
+                .then(cities => {
+                    const list = document.getElementById('citiesList');
+                    list.innerHTML = '';
+                    
+                    cities.forEach(city => {
+                        const item = document.createElement('div');
+                        item.className = 'list-item';
+                        item.textContent = city;
+                        item.onclick = function() {
+                            // Remove selection from other items
+                            document.querySelectorAll('#citiesList .list-item').forEach(el => {
+                                el.classList.remove('selected');
+                            });
+                            this.classList.add('selected');
+                            selectedCity = city;
+                        };
+                        list.appendChild(item);
+                    });
+                });
+        }
+        
+        function addCity() {
+            const cityName = document.getElementById('newCityField').value.trim();
+            if (!cityName) {
+                alert('Please enter a city name.');
+                return;
+            }
+            
+            fetch('AdminServlet?action=addCity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `cityName=${encodeURIComponent(cityName)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('City added successfully!');
+                    document.getElementById('newCityField').value = '';
+                    loadCities();
+                } else {
+                    alert(data.message || 'Failed to add city.');
+                }
+            });
+        }
+        
+        function deleteCity() {
+            if (!selectedCity) {
+                alert('Please select a city to delete.');
+                return;
+            }
+            
+            if (!confirm(`Are you sure you want to delete "${selectedCity}"?`)) {
+                return;
+            }
+            
+            fetch('AdminServlet?action=deleteCity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `cityName=${encodeURIComponent(selectedCity)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('City deleted successfully!');
+                    selectedCity = null;
+                    loadCities();
+                } else {
+                    alert(data.message || 'Failed to delete city.');
+                }
+            });
+        }
+        
+        // 5. Reports Functions
+        function loadReportData() {
+            fetch('AdminServlet?action=getReportData')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalUsers').textContent = data.totalUsers || 0;
+                    document.getElementById('totalBookings').textContent = data.totalBookings || 0;
+                    document.getElementById('activeProviders').textContent = data.activeProviders || 0;
+                    
+                    // Load user distribution chart
+                    const userDistChart = document.getElementById('userDistributionChart');
+                    userDistChart.innerHTML = `
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 24px; color: #2d5aa0; margin-bottom: 10px;">User Distribution</div>
+                                <div style="display: flex; gap: 20px; justify-content: center;">
+                                    ${data.userDistribution ? Object.entries(data.userDistribution).map(([role, count]) => `
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 32px; font-weight: bold; color: #3498db;">${count}</div>
+                                            <div style="font-size: 14px; color: #7f8c8d;">${role}</div>
+                                        </div>
+                                    `).join('') : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Load top skills chart
+                    const skillsChart = document.getElementById('topSkillsChart');
+                    skillsChart.innerHTML = `
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 24px; color: #2d5aa0; margin-bottom: 10px;">Top Skills</div>
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    ${data.topSkills ? data.topSkills.map(skill => `
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="flex: 1; text-align: left;">${skill.name}</div>
+                                            <div style="background: #27ae60; color: white; padding: 5px 10px; border-radius: 3px; min-width: 60px; text-align: center;">
+                                                ${skill.count} requests
+                                            </div>
+                                        </div>
+                                    `).join('') : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+        }
+        
+        function generateReport() {
+            const format = document.getElementById('reportFormat').value;
+            
+            fetch(`AdminServlet?action=generateReport&format=${format}`)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create download link
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `EthioSkill_Report_${format}_${new Date().toISOString().split('T')[0]}.html`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    alert('Report generated and downloaded successfully!');
+                });
+        }
+        
+        // 6. Settings Functions
+        function loadSettings() {
+            fetch('AdminServlet?action=getSettings')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('autoVerifyCheckbox').checked = data.autoVerify || false;
+                });
+        }
+        
+        function toggleAutoVerify() {
+            const enabled = document.getElementById('autoVerifyCheckbox').checked;
+            
+            fetch('AdminServlet?action=toggleAutoVerify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `enabled=${enabled}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSettingsMessage('Auto-verify setting updated!', 'success');
+                } else {
+                    showSettingsMessage('Failed to update setting.', 'error');
+                }
+            });
+        }
+        
+        function updatePassword() {
+            const currentPass = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (!currentPass || !newPass || !confirmPass) {
+                showSettingsMessage('All fields are required!', 'error');
+                return;
+            }
+            
+            if (newPass !== confirmPass) {
+                showSettingsMessage('New passwords do not match!', 'error');
+                return;
+            }
+            
+            if (newPass.length < 6) {
+                showSettingsMessage('Password must be at least 6 characters.', 'error');
+                return;
+            }
+            
+            fetch('AdminServlet?action=updatePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `currentPassword=${encodeURIComponent(currentPass)}&newPassword=${encodeURIComponent(newPass)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSettingsMessage('Password updated successfully!', 'success');
+                    // Clear form
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                } else {
+                    showSettingsMessage(data.message || 'Failed to update password.', 'error');
+                }
+            });
+        }
+        
+        function showSettingsMessage(message, type) {
+            const msgDiv = document.getElementById('settingsMessage');
+            msgDiv.textContent = message;
+            msgDiv.className = 'message ' + type;
+            msgDiv.style.display = 'block';
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Add modal styles
+        const modalStyle = document.createElement('style');
+        modalStyle.textContent = `
+            .modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            
+            .modal {
+                background: white;
+                border-radius: 8px;
+                width: 90%;
+                max-width: 500px;
+                max-height: 90vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            }
+            
+            .modal-header {
+                background: #2d5aa0;
+                color: white;
+                padding: 20px;
+                border-radius: 8px 8px 0 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .modal-header h3 {
+                margin: 0;
+            }
+            
+            .close-modal {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+        `;
+        document.head.appendChild(modalStyle);
+    </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Booking Request</title>
+    <link rel="icon" href="images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .booking-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .booking-header {
+            background: #2d5aa0;
+            color: white;
+            padding: 25px 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .header-content img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .header-text h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .header-text p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .booking-form {
+            padding: 30px;
+        }
+        
+        .provider-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .provider-info img {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .provider-details .label {
+            font-size: 11px;
+            color: #777;
+            margin-bottom: 3px;
+        }
+        
+        .provider-details .name {
+            font-size: 14px;
+            color: #2d5aa0;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .provider-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .provider-meta .rate {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .separator {
+            height: 1px;
+            background: #eee;
+            margin: 20px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #2d5aa0;
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .error-message {
+            background: #ffe6e6;
+            color: #e74c3c;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            min-width: 110px;
+        }
+        
+        .btn-cancel {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-clear {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .btn-submit {
+            background: #27ae60;
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .booking-footer {
+            height: 5px;
+            background: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-container">
+        <div class="booking-header">
+            <div class="header-content">
+                <img src="images/booking-icon-white.png" alt="Booking">
+                <div class="header-text">
+                    <h2>Service Booking Request</h2>
+                    <p>Complete the form to hire this professional</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="booking-form">
+            <!-- Provider Info (This would be filled by JavaScript) -->
+            <div class="provider-info">
+                <img src="images/user-icon.png" alt="Provider">
+                <div class="provider-details">
+                    <div class="label">YOU ARE BOOKING:</div>
+                    <div class="name" id="providerName">Provider Name Here</div>
+                    <div class="provider-meta">
+                        <span id="providerSkill">Plumber</span>
+                        <span>|</span>
+                        <span class="rate" id="providerRate">Hourly Rate</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage"></div>
+            
+            <!-- Booking Form -->
+            <form id="bookingForm" onsubmit="return handleSubmit()">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="seekerName">Your Full Name *</label>
+                        <input type="text" id="seekerName" name="seekerName" placeholder="Enter your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="seekerPhone">Contact Phone *</label>
+                        <input type="tel" id="seekerPhone" name="seekerPhone" placeholder="09XXXXXXXX" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceDate">Desired Service Date *</label>
+                    <input type="date" id="serviceDate" name="serviceDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceAddress">Service Location / Address *</label>
+                    <input type="text" id="serviceAddress" name="serviceAddress" 
+                           placeholder="City, Sub-city, Specific Location (e.g., Bole, near Friendship Mall)" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceDetails">Job Description / Details *</label>
+                    <textarea id="serviceDetails" name="serviceDetails" 
+                              placeholder="Please describe the work required in detail..." required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" onclick="handleCancel()">Cancel</button>
+                    <button type="button" class="btn btn-clear" onclick="handleClear()">Clear Form</button>
+                    <button type="submit" class="btn btn-submit">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="booking-footer"></div>
+    </div>
+    
+    <script>
+        // Get provider ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const providerId = urlParams.get('providerId');
+        
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('serviceDate').min = today;
+            
+            // Load provider data if ID is provided
+            if (providerId) {
+                loadProviderData(providerId);
+            } else {
+                // Demo data for testing
+                document.getElementById('providerName').textContent = 'Demo Provider';
+                document.getElementById('providerSkill').textContent = 'Electrician';
+                document.getElementById('providerRate').textContent = 'Hourly Rate: 500 ETB';
+            }
+            
+            // Load seeker data if logged in
+            const user = sessionStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                document.getElementById('seekerName').value = userData.fullName;
+                document.getElementById('seekerPhone').value = userData.phone;
+            }
+        });
+        
+        function loadProviderData(providerId) {
+            // This would typically fetch from an API
+            fetch(`/api/providers/${providerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('providerName').textContent = data.fullName;
+                    document.getElementById('providerSkill').textContent = data.skill;
+                    document.getElementById('providerRate').textContent = data.paymentType;
+                })
+                .catch(error => {
+                    console.error('Error loading provider data:', error);
+                });
+        }
+        
+        function validatePhone(phone) {
+            const phoneRegex = /^(09|\+251)[0-9]{8,9}$/;
+            return phoneRegex.test(phone);
+        }
+        
+        function handleSubmit() {
+            // Get form values
+            const seekerName = document.getElementById('seekerName').value.trim();
+            const seekerPhone = document.getElementById('seekerPhone').value.trim();
+            const serviceDate = document.getElementById('serviceDate').value;
+            const serviceAddress = document.getElementById('serviceAddress').value.trim();
+            const serviceDetails = document.getElementById('serviceDetails').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Clear previous error
+            errorDiv.style.display = 'none';
+            
+            // Validation
+            if (!seekerName || !seekerPhone || !serviceDate || !serviceAddress || !serviceDetails) {
+                showError('All fields marked with * are required.');
+                return false;
+            }
+            
+            if (!validatePhone(seekerPhone)) {
+                showError('Invalid phone number format. Please use 09XXXXXXXX or +251XXXXXXXXX');
+                return false;
+            }
+            
+            // Check if date is in the past
+            const selectedDate = new Date(serviceDate);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                showError('Please select a future date.');
+                return false;
+            }
+            
+            // Submit booking
+            const bookingData = {
+                providerId: providerId || 1, // Demo provider ID
+                seekerName: seekerName,
+                seekerPhone: seekerPhone,
+                serviceDate: serviceDate,
+                serviceAddress: serviceAddress,
+                serviceDetails: serviceDetails
+            };
+            
+            // In a real application, this would be an API call
+            console.log('Booking submitted:', bookingData);
+            
+            // Simulate successful booking
+            alert('Booking request sent successfully! You will be notified when the provider responds.');
+            
+            // Clear form
+            handleClear();
+            
+            // Close window if opened as popup
+            if (window.opener) {
+                window.close();
+            }
+            
+            return false;
+        }
+        
+        function handleClear() {
+            document.getElementById('bookingForm').reset();
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Reset to user data if logged in
+            const user = sessionStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                document.getElementById('seekerName').value = userData.fullName;
+                document.getElementById('seekerPhone').value = userData.phone;
+            }
+        }
+        
+        function handleCancel() {
+            if (window.opener) {
+                window.close();
+            } else {
+                window.history.back();
+            }
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Scroll to error
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>

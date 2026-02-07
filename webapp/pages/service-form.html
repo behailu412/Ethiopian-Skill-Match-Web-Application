@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Service</title>
+    <link rel="icon" href="images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cambria', Georgia, serif;
+        }
+        
+        body {
+            background: rgba(0, 0, 0, 0.5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .service-container {
+            width: 100%;
+            max-width: 520px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .service-header {
+            background: #bcb6b6;
+            padding: 30px;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .header-content img {
+            width: 65px;
+            height: 45px;
+            mix-blend-mode: multiply;
+        }
+        
+        .header-text h1 {
+            font-size: 24px;
+            color: #1e1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .header-text p {
+            font-size: 14px;
+            color: #171616;
+            font-style: italic;
+        }
+        
+        .service-form {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #f9f9f9;
+            transition: all 0.3s;
+        }
+        
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2d5aa0;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 90, 160, 0.1);
+        }
+        
+        .form-group textarea {
+            height: 140px;
+            resize: vertical;
+        }
+        
+        .error-message {
+            background: #ffe6e6;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            min-width: 110px;
+        }
+        
+        .btn-cancel {
+            background: white;
+            color: #666;
+            border: 1px solid #999;
+        }
+        
+        .btn-save {
+            background: #27ae60;
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="service-container">
+        <div class="service-header">
+            <div class="header-content">
+                <img src="images/skill-icon.jpg" alt="Skill Icon">
+                <div class="header-text">
+                    <h1>Add New Service</h1>
+                    <p>Expand your professional offerings</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="service-form">
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage">
+                Please fill all required fields
+            </div>
+            
+            <!-- Service Form -->
+            <form id="serviceForm" onsubmit="return handleSubmit()">
+                <div class="form-group">
+                    <label for="serviceSkill">Select Skill Category *</label>
+                    <select id="serviceSkill" name="serviceSkill" required>
+                        <option value="">Choose a skill (e.g. Electrician)</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Electrical">Electrical Work</option>
+                        <option value="Carpentry">Carpentry</option>
+                        <option value="Painting">Painting</option>
+                        <option value="Cleaning">Cleaning Services</option>
+                        <option value="Repair">General Repair</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="servicePayment">Payment Type *</label>
+                    <select id="servicePayment" name="servicePayment" required>
+                        <option value="">Hourly / Fixed</option>
+                        <option value="Hourly">Hourly Rate</option>
+                        <option value="Fixed">Fixed Price</option>
+                        <option value="Project">Project Based</option>
+                        <option value="Daily">Daily Rate</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceDescription">Experience / Description</label>
+                    <textarea id="serviceDescription" name="serviceDescription" 
+                              placeholder="Briefly describe your experience with this skill..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" onclick="handleCancel()">Cancel</button>
+                    <button type="submit" class="btn btn-save">Add Service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load skills from server if available
+            loadSkills();
+            
+            // Hide error message initially
+            document.getElementById('errorMessage').style.display = 'none';
+        });
+        
+        function loadSkills() {
+            // This would typically fetch from an API
+            // For now, we'll use the static options
+        }
+        
+        function handleSubmit() {
+            const skill = document.getElementById('serviceSkill').value;
+            const payment = document.getElementById('servicePayment').value;
+            const description = document.getElementById('serviceDescription').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Clear previous error
+            errorDiv.style.display = 'none';
+            
+            // Validation
+            if (!skill || !payment) {
+                errorDiv.textContent = 'Please select both skill category and payment type.';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+            
+            // Prepare service data
+            const serviceData = {
+                skill: skill,
+                paymentType: payment,
+                description: description || 'No description provided.'
+            };
+            
+            // In a real application, this would be an API call
+            console.log('Service added:', serviceData);
+            
+            // Simulate successful save
+            alert('Service added successfully!');
+            
+            // Close window if opened as popup
+            if (window.opener) {
+                // Notify parent window
+                window.opener.postMessage({ type: 'serviceAdded', data: serviceData }, '*');
+                window.close();
+            } else {
+                // Clear form for standalone use
+                document.getElementById('serviceForm').reset();
+            }
+            
+            return false;
+        }
+        
+        function handleCancel() {
+            if (window.opener) {
+                window.close();
+            } else {
+                window.history.back();
+            }
+        }
+    </script>
+</body>
+</html>

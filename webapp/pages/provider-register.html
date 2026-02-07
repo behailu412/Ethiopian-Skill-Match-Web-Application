@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Skill Match System - Provider Registration</title>
+    <link rel="icon" href="images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f4f4;
+            min-height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Left Sidebar */
+        .left-sidebar {
+            width: 450px;
+            background: linear-gradient(to bottom, #144713, #1e3a6f);
+            color: white;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-circle {
+            width: 280px;
+            height: 280px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-circle img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+        }
+        
+        .final-step-text {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .final-step-text h1 {
+            font-size: 42px;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .final-step-text h2 {
+            font-size: 36px;
+            color: #f0d43a;
+            font-style: italic;
+        }
+        
+        .slogan {
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .slogan p {
+            font-size: 22px;
+            line-height: 1.5;
+            color: white;
+            text-align: center;
+        }
+        
+        /* Right Panel */
+        .right-panel {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step-indicator {
+            text-align: right;
+            margin-bottom: 20px;
+            color: #999;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        
+        .form-header {
+            margin-bottom: 30px;
+        }
+        
+        .form-header h1 {
+            color: #2d5aa0;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #2d5aa0;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2d5aa0;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 90, 160, 0.1);
+        }
+        
+        .photo-upload-section {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background: #f9f9f9;
+            margin-top: 20px;
+        }
+        
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+        
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .photo-placeholder img {
+            width: 60px;
+            height: 60px;
+            opacity: 0.5;
+        }
+        
+        .upload-button {
+            display: inline-block;
+            background: #2d5aa0;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .upload-button:hover {
+            background: #1e3a6f;
+        }
+        
+        .file-info {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .form-actions {
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .submit-btn {
+            background: #2d5aa0;
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .submit-btn:hover {
+            background: #1e3a6f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 58, 111, 0.2);
+        }
+        
+        .logout-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: #ffe6e6;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            display: none;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-sidebar {
+                width: 100%;
+                padding: 30px 20px;
+            }
+            
+            .logo-circle {
+                width: 200px;
+                height: 200px;
+                margin-bottom: 30px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .right-panel {
+                padding: 20px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="left-sidebar">
+            <div class="logo-circle">
+                <img src="images/skill-match.jpg" alt="Skill Match Logo">
+            </div>
+            
+            <div class="final-step-text">
+                <h1>Final Step,</h1>
+                <h2>Get Verified.</h2>
+            </div>
+            
+            <div class="slogan">
+                <p>Complete your professional profile to start receiving job requests !!!</p>
+            </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="form-container">
+                <div class="step-indicator">final step</div>
+                
+                <div class="form-header">
+                    <h1>Provider Registration</h1>
+                    <p>Set up your service details</p>
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    <!-- Error messages will appear here -->
+                </div>
+                
+                <form id="registrationForm" onsubmit="return handleSubmit()">
+                    <!-- Personal Information Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Personal Information</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">Base City *</label>
+                                <select id="city" name="city" required>
+                                    <option value="">Select your city</option>
+                                    <!-- Options will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="skill">Primary Skill / Service *</label>
+                                <select id="skill" name="skill" required>
+                                    <option value="">Select your main skill</option>
+                                    <!-- Options will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Details Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Service Details</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentType">Payment Type *</label>
+                                <select id="paymentType" name="paymentType" required>
+                                    <option value="">Select payment type</option>
+                                    <option value="Hourly">Hourly</option>
+                                    <option value="Project-Based">Project-Based</option>
+                                    <option value="Daily">Daily</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Experience / Description *</label>
+                            <textarea id="description" name="description" placeholder="Describe your skills, years of experience, and what you offer..." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo Upload Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Profile Photo *</h2>
+                        
+                        <div class="photo-upload-section">
+                            <div id="photoPreview" class="photo-placeholder">
+                                <img src="images/user-icon.png" alt="User Placeholder">
+                            </div>
+                            
+                            <label for="photoUpload" class="upload-button">
+                                Browse Image...
+                            </label>
+                            <input type="file" id="photoUpload" name="photo" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+                            
+                            <div class="file-info">Max size 10MB (JPG/PNG)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">Submit for Verification</button>
+                        <br>
+                        <a href="login.html" class="logout-link">Logout and Finish Later</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedPhoto = null;
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadUserData();
+            loadFilters();
+        });
+        
+        function checkAuth() {
+            const user = sessionStorage.getItem('user');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            if (userData.role !== 'Provider') {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        function loadUserData() {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            document.getElementById('fullName').value = user.fullName;
+            document.getElementById('phone').value = user.phone;
+        }
+        
+        function loadFilters() {
+            // Load cities
+            fetch('ProviderServlet?action=getCities')
+                .then(response => response.json())
+                .then(cities => {
+                    const citySelect = document.getElementById('city');
+                    cities.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    });
+                });
+            
+            // Load skills
+            fetch('ProviderServlet?action=getSkills')
+                .then(response => response.json())
+                .then(skills => {
+                    const skillSelect = document.getElementById('skill');
+                    skills.forEach(skill => {
+                        const option = document.createElement('option');
+                        option.value = skill;
+                        option.textContent = skill;
+                        skillSelect.appendChild(option);
+                    });
+                });
+        }
+        
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showError('File size must be less than 10MB');
+                return;
+            }
+            
+            // Validate file type
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                showError('Only JPG and PNG images are allowed');
+                return;
+            }
+            
+            selectedPhoto = file;
+            
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const photoPreview = document.getElementById('photoPreview');
+                photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Photo">`;
+                photoPreview.className = 'photo-preview';
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function handleSubmit() {
+            // Get form values
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const city = document.getElementById('city').value;
+            const skill = document.getElementById('skill').value;
+            const paymentType = document.getElementById('paymentType').value;
+            const description = document.getElementById('description').value.trim();
+            
+            // Validation
+            if (!fullName || !phone || !city || !skill || !paymentType || !description) {
+                showError('All fields are required!');
+                return false;
+            }
+            
+            if (!selectedPhoto) {
+                showError('Please upload a profile photo');
+                return false;
+            }
+            
+            if (!validatePhone(phone)) {
+                showError('Invalid phone number format. Use 09XXXXXXXX or +251XXXXXXXXX');
+                return false;
+            }
+            
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('action', 'registerProvider');
+            formData.append('fullName', fullName);
+            formData.append('phone', phone);
+            formData.append('city', city);
+            formData.append('skill', skill);
+            formData.append('paymentType', paymentType);
+            formData.append('description', description);
+            formData.append('photo', selectedPhoto);
+            
+            // Submit registration
+            fetch('ProviderServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update user data in sessionStorage
+                    const user = JSON.parse(sessionStorage.getItem('user'));
+                    user.status = data.status;
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    
+                    alert(data.message || 'Registration submitted successfully! Waiting for admin approval.');
+                    window.location.href = 'login.html';
+                } else {
+                    showError(data.message || 'Registration failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Network error. Please try again.');
+            });
+            
+            return false;
+        }
+        
+        function validatePhone(phone) {
+            const phoneRegex = /^(09|\+251)[0-9]{8,9}$/;
+            return phoneRegex.test(phone);
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Scroll to error
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>

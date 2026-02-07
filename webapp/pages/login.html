@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Skill Match System - Login</title>
+    <!-- Path updated to step out of pages folder -->
+    <link rel="icon" href="../images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #144713 0%, #2d5aa0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            min-height: 700px;
+        }
+        
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(to bottom, #144713, #1e3a6f);
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .logo-circle {
+            width: 250px;
+            height: 250px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-circle img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+        }
+        
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-text h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .welcome-text h2 {
+            font-size: 32px;
+            color: #f0d43a;
+            font-style: italic;
+        }
+        
+        .slogan {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .slogan h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #f5554f;
+        }
+        
+        .slogan p {
+            font-size: 18px;
+            color: #e45c5c;
+            font-style: italic;
+        }
+        
+        .right-panel {
+            flex: 1.2;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .login-header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .login-header h2 {
+            color: #2d5aa0;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2d5aa0;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 90, 160, 0.1);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-container input {
+            padding-right: 50px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            color: #555;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: #2d5aa0;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 25px;
+        }
+        
+        .login-btn:hover {
+            background: #1e3a6f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 58, 111, 0.2);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .signup-link a {
+            color: #2d5aa0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: #ffe6e6;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            display: none;
+            border: 1px solid #e74c3c;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .left-panel {
+                padding: 30px 20px;
+            }
+            
+            .right-panel {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="logo-circle">
+                <!-- Fix: Point to ../images since we are in pages/ -->
+                <img src="../images/skill-match.jpg" alt="Ethiopian Skill Match Logo">
+            </div>
+            
+            <div class="welcome-text">
+                <h1>Ethiopian</h1>
+                <h2>Skill Match System</h2>
+            </div>
+            
+            <div class="slogan">
+                <h3>Connecting Talent</h3>
+                <p>with Opportunity</p>
+            </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="login-header">
+                <!-- Fix: Point to ../images -->
+                <img src="../images/logo.png" alt="Logo">
+                <h2>Welcome Back</h2>
+                <p>Sign in to your account</p>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                <!-- Error messages will appear here -->
+            </div>
+            
+            <form id="loginForm" onsubmit="return handleLogin()">
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="09XXXXXXXX" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">Show</button>
+                    </div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showPasswordCheck" onchange="togglePasswordVisibility()">
+                    <label for="showPasswordCheck">Show password</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Select Role *</label>
+                    <select id="role" name="role" required>
+                        <option value="">Choose role</option>
+                        <option value="Seeker">Seeker</option>
+                        <option value="Provider">Provider</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            
+            <div class="signup-link">
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </div>
+            
+            <div class="footer">
+                <p>© 2025 Ethiopian Skill Match System</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-password');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleBtn.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                toggleBtn.textContent = 'Show';
+            }
+        }
+        
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const checkBox = document.getElementById('showPasswordCheck');
+            
+            if (checkBox.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+        
+        function validatePhone(phone) {
+            // Ethiopian phone validation
+            const phoneRegex = /^(09|\+251)[0-9]{8,9}$/;
+            return phoneRegex.test(phone);
+        }
+        
+        function handleLogin() {
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Clear previous error
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+            
+            // Validation
+            if (!phone || !password || !role) {
+                showError('All fields are required!');
+                return false;
+            }
+            
+            if (!validatePhone(phone)) {
+                showError('Please enter a valid Ethiopian phone number (e.g., 0911223344)');
+                return false;
+            }
+            
+            // Prepare Data
+            const formData = new FormData();
+            formData.append('action', 'login');
+            formData.append('phone', phone);
+            formData.append('password', password);
+            formData.append('role', role);
+            
+            // Show loading state (optional but good practice)
+            const btn = document.querySelector('.login-btn');
+            const originalBtnText = btn.textContent;
+            btn.textContent = "Signing In...";
+            btn.disabled = true;
+
+            // Fix: Point to ../LoginServlet because we are in /pages/
+            fetch('../LoginServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async response => {
+                // 1. Get raw text to detect HTML error pages (500/404)
+                const text = await response.text();
+                
+                try {
+                    // 2. Try to parse JSON
+                    const data = JSON.parse(text);
+                    
+                    // 3. Check for logic errors from API
+                    if (!data.success) {
+                        throw new Error(data.message || 'Login failed');
+                    }
+                    return data;
+                } catch (e) {
+                    // 4. Handle non-JSON response (Server Crash)
+                    console.error("Server Response:", text);
+                    if (response.status === 404) {
+                        throw new Error("LoginServlet not found (404). Check URL path.");
+                    }
+                    if (response.status === 500) {
+                        throw new Error("Server Internal Error (500). Missing Gson/MySQL JARs?");
+                    }
+                    if (text.trim().startsWith("<!DOCTYPE html>")) {
+                        throw new Error("Server Error: Received HTML instead of JSON. Check server logs.");
+                    }
+                    // Throw the original API error if it was parsed successfully
+                    throw e; 
+                }
+            })
+            .then(data => {
+                // Success Handling
+                sessionStorage.setItem('user', JSON.stringify(data.user));
+                
+                // Fix: Redirect to HTML pages, not Servlets
+                if (role === 'Admin') {
+                    window.location.href = 'admin-dashboard.html';
+                } else if (role === 'Seeker') {
+                    window.location.href = 'seeker-dashboard.html';
+                } else if (role === 'Provider') {
+                    if (data.needsRegistration) {
+                        window.location.href = 'provider-register.html';
+                    } else {
+                        window.location.href = 'provider-dashboard.html';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Login Error:', error);
+                showError(error.message || "An unexpected error occurred.");
+            })
+            .finally(() => {
+                // Reset button state
+                btn.textContent = originalBtnText;
+                btn.disabled = false;
+            });
+            
+            return false; // Prevent form submission
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        // Auto-redirect if already logged in
+        window.addEventListener('load', function() {
+            const user = sessionStorage.getItem('user');
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    if (userData.role === 'Admin') window.location.href = 'admin-dashboard.html';
+                    if (userData.role === 'Seeker') window.location.href = 'seeker-dashboard.html';
+                    if (userData.role === 'Provider') window.location.href = 'provider-dashboard.html';
+                } catch (e) {
+                    sessionStorage.removeItem('user'); // Corrupt data
+                }
+            }
+        });
+    </script>
+</body>
+</html>

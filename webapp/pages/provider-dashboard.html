@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Skill Match System - Provider Dashboard</title>
+    <link rel="icon" href="images/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        .header-top {
+            background: linear-gradient(to right, #2d5aa0, #144713);
+            height: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-main {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        
+        .logo-section img {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .welcome-text h2 {
+            color: #2d5aa0;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .welcome-text p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 25px;
+            border: 2px solid;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .btn-refresh {
+            color: #3498db;
+            border-color: #3498db;
+        }
+        
+        .btn-refresh:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-logout {
+            color: #e74c3c;
+            border-color: #e74c3c;
+        }
+        
+        .btn-logout:hover {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            max-width: 1400px;
+            margin: 30px auto;
+            gap: 30px;
+            padding: 0 20px;
+        }
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .profile-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid #2d5aa0;
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-name {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .profile-skill {
+            background: #eee;
+            color: #777;
+            padding: 5px 15px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        
+        .btn-edit-profile {
+            background: transparent;
+            color: #2d5aa0;
+            border: none;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .actions-section {
+            margin-bottom: 25px;
+        }
+        
+        .btn-add-service {
+            width: 100%;
+            padding: 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .btn-add-service:hover {
+            background: #219955;
+        }
+        
+        .status-section {
+            margin-bottom: 25px;
+        }
+        
+        .status-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: #777;
+            font-size: 12px;
+        }
+        
+        #statusSelect {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            background: white;
+        }
+        
+        .stats-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 4px solid #2d5aa0;
+        }
+        
+        .stats-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2d5aa0;
+        }
+        
+        .stats-label {
+            font-size: 12px;
+            color: #777;
+        }
+        
+        /* Main Content Area */
+        .content-area {
+            flex: 1;
+        }
+        
+        .content-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .content-header img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .content-header h2 {
+            color: #2d5aa0;
+            font-size: 20px;
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        th {
+            background: #f8f9fa;
+            color: #2d5aa0;
+            font-weight: bold;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #eee;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .status-pending {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .status-accepted {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .status-cancelled {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .status-completed {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .btn-accept {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-accept:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            background: #2d5aa0;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .modal-content {
+            padding: 20px;
+        }
+        
+        .modal-content .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 11px;
+        }
+        
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .modal-content textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn-modal-cancel {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-modal-save {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Edit Profile Modal */
+        .edit-profile-modal {
+            max-width: 500px;
+        }
+        
+        .edit-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .edit-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+        
+        .edit-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .btn-change-photo {
+            background: #eee;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-modal-update {
+            background: #2d5aa0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .logo-section {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-top"></div>
+    <div class="header-main">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="images/logo.png" alt="Logo">
+                <div class="welcome-text">
+                    <h2>Provider Dashboard</h2>
+                    <p>Welcome, <span id="providerName">Provider</span></p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-refresh" onclick="handleRefresh()">Refresh</button>
+                <button class="btn btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-photo" id="profilePhoto">
+                    <img src="images/user-icon.png" alt="Profile">
+                </div>
+                <div class="profile-name" id="sidebarName">Provider Name</div>
+                <div class="profile-skill" id="sidebarSkill">Primary Skill</div>
+                <button class="btn-edit-profile" onclick="openEditProfileModal()">Edit Profile</button>
+            </div>
+            
+            <!-- Actions Section -->
+            <div class="actions-section">
+                <button class="btn-add-service" onclick="openAddServiceModal()">+ Add New Service</button>
+                
+                <div class="status-section">
+                    <label>Current Status:</label>
+                    <select id="statusSelect" onchange="updateStatus()">
+                        <option value="">Select Status</option>
+                        <option value="Available">Available</option>
+                        <option value="Rest">Rest</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Stats Card -->
+            <div class="stats-card">
+                <div>
+                    <div class="stats-number" id="totalBookings">0</div>
+                    <div class="stats-label">Total Bookings</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <div class="content-header">
+                <img src="images/booking-icon.png" alt="Bookings">
+                <h2>BOOKING REQUESTS</h2>
+            </div>
+            
+            <div class="table-container">
+                <table id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th>Seeker Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Date</th>
+                            <th>Service Details</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <!-- Bookings will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Service Modal -->
+    <div class="modal-overlay" id="addServiceModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>ADD NEW SERVICE</h3>
+            </div>
+            
+            <div class="modal-content">
+                <div class="form-group">
+                    <label>Select Skill Category *</label>
+                    <select id="newServiceSkill">
+                        <option value="">Select Skill Category</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Payment Type *</label>
+                    <select id="newServicePayment">
+                        <option value="">Payment Type</option>
+                        <option value="Hourly">Hourly</option>
+                        <option value="Project-Based">Project-Based</option>
+                        <option value="Daily">Daily</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="newServiceDescription" placeholder="Briefly describe your experience..."></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closeAddServiceModal()">Cancel</button>
+                    <button class="btn-modal-save" onclick="submitNewService()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal edit-profile-modal">
+            <div class="modal-header">
+                <h3>EDIT PROFILE</h3>
+            </div>
+            
+            <div class="modal-content">
+                <div class="edit-profile-header">
+                    <div class="edit-photo" id="editProfilePhoto">
+                        <img src="images/user-icon.png" alt="Profile">
+                    </div>
+                    <div>
+                        <button class="btn-change-photo" onclick="triggerPhotoUpload()">Change Photo...</button>
+                        <input type="file" id="photoUploadInput" accept="image/*" style="display: none;" onchange="handleEditPhotoUpload(event)">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="editName" class="modal-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="editPhone" class="modal-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City *</label>
+                        <select id="editCity">
+                            <option value="">Select City</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Type *</label>
+                        <select id="editPayment">
+                            <option value="">Select Payment Type</option>
+                            <option value="Hourly">Hourly</option>
+                            <option value="Project-Based">Project-Based</option>
+                            <option value="Daily">Daily</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closeEditProfileModal()">Cancel</button>
+                    <button class="btn-modal-update" onclick="submitEditProfile()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let editProfilePhoto = null;
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadUserData();
+            loadBookings();
+            checkNotifications();
+            loadServiceSkills();
+            loadEditCities();
+        });
+        
+        function checkAuth() {
+            const user = sessionStorage.getItem('user');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            if (userData.role !== 'Provider') {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        function loadUserData() {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            document.getElementById('providerName').textContent = user.fullName;
+            document.getElementById('sidebarName').textContent = user.fullName;
+            
+            // Load provider details
+            fetch('ProviderServlet?action=getProviderDetails')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const details = data.details;
+                        document.getElementById('sidebarSkill').textContent = details.skill || 'Not set';
+                        document.getElementById('statusSelect').value = details.availability || 'Available';
+                        
+                        // Load profile photo
+                        if (details.photoPath && details.photoPath !== 'default') {
+                            document.getElementById('profilePhoto').innerHTML = 
+                                `<img src="${details.photoPath}" alt="Profile">`;
+                            document.getElementById('editProfilePhoto').innerHTML = 
+                                `<img src="${details.photoPath}" alt="Profile">`;
+                        }
+                        
+                        // Pre-fill edit form
+                        document.getElementById('editName').value = user.fullName;
+                        document.getElementById('editPhone').value = user.phone;
+                        document.getElementById('editCity').value = details.city || '';
+                        document.getElementById('editPayment').value = details.paymentType || '';
+                    }
+                });
+        }
+        
+        function loadBookings() {
+            fetch('ProviderServlet?action=getBookings')
+                .then(response => response.json())
+                .then(bookings => {
+                    renderBookingsTable(bookings);
+                    document.getElementById('totalBookings').textContent = bookings.length;
+                });
+        }
+        
+        function renderBookingsTable(bookings) {
+            const tbody = document.getElementById('bookingsTableBody');
+            tbody.innerHTML = '';
+            
+            bookings.forEach(booking => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const date = new Date(booking.date);
+                const formattedDate = date.toLocaleDateString('en-ET', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Status class
+                let statusClass = '';
+                switch(booking.status) {
+                    case 'Pending': statusClass = 'status-pending'; break;
+                    case 'Accepted': statusClass = 'status-accepted'; break;
+                    case 'Cancelled': statusClass = 'status-cancelled'; break;
+                    case 'Completed': statusClass = 'status-completed'; break;
+                }
+                
+                // Action button
+                let actionButton = '';
+                if (booking.status === 'Pending') {
+                    actionButton = `<button class="btn-accept" onclick="acceptBooking(${booking.id})">Accept</button>`;
+                } else {
+                    actionButton = `<button class="btn-accept" disabled>${booking.status}</button>`;
+                }
+                
+                row.innerHTML = `
+                    <td>${booking.seekerName}</td>
+                    <td>${booking.phone}</td>
+                    <td>${booking.address}</td>
+                    <td>${formattedDate}</td>
+                    <td>${booking.details}</td>
+                    <td class="${statusClass}">${booking.status}</td>
+                    <td>${actionButton}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        function loadServiceSkills() {
+            fetch('ProviderServlet?action=getSkills')
+                .then(response => response.json())
+                .then(skills => {
+                    const skillSelect = document.getElementById('newServiceSkill');
+                    skills.forEach(skill => {
+                        const option = document.createElement('option');
+                        option.value = skill;
+                        option.textContent = skill;
+                        skillSelect.appendChild(option);
+                    });
+                });
+        }
+        
+        function loadEditCities() {
+            fetch('ProviderServlet?action=getCities')
+                .then(response => response.json())
+                .then(cities => {
+                    const citySelect = document.getElementById('editCity');
+                    cities.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    });
+                });
+        }
+        
+        function updateStatus() {
+            const status = document.getElementById('statusSelect').value;
+            if (!status) return;
+            
+            const formData = new FormData();
+            formData.append('action', 'updateStatus');
+            formData.append('status', status);
+            
+            fetch('ProviderServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update status styling
+                    const select = document.getElementById('statusSelect');
+                    if (status === 'Available') {
+                        select.style.borderColor = '#27ae60';
+                        select.style.color = '#27ae60';
+                    } else {
+                        select.style.borderColor = '#e74c3c';
+                        select.style.color = '#e74c3c';
+                    }
+                }
+            });
+        }
+        
+        function acceptBooking(bookingId) {
+            if (!confirm('Are you sure you want to accept this booking?')) {
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('action', 'acceptBooking');
+            formData.append('bookingId', bookingId);
+            
+            fetch('ProviderServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Booking accepted! The seeker has been notified.');
+                    loadBookings();
+                } else {
+                    alert(data.message || 'Failed to accept booking.');
+                }
+            });
+        }
+        
+        function openAddServiceModal() {
+            document.getElementById('addServiceModal').classList.add('show');
+        }
+        
+        function closeAddServiceModal() {
+            document.getElementById('addServiceModal').classList.remove('show');
+            document.getElementById('newServiceSkill').value = '';
+            document.getElementById('newServicePayment').value = '';
+            document.getElementById('newServiceDescription').value = '';
+        }
+        
+        function submitNewService() {
+            const skill = document.getElementById('newServiceSkill').value;
+            const payment = document.getElementById('newServicePayment').value;
+            const description = document.getElementById('newServiceDescription').value.trim();
+            
+            if (!skill || !payment) {
+                alert('Please select both skill category and payment type.');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('action', 'updateService');
+            formData.append('skill', skill);
+            formData.append('paymentType', payment);
+            formData.append('description', description || 'Updated Service');
+            
+            fetch('ProviderServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Service updated successfully!');
+                    closeAddServiceModal();
+                    loadUserData(); // Refresh profile data
+                } else {
+                    alert(data.message || 'Failed to update service.');
+                }
+            });
+        }
+        
+        function openEditProfileModal() {
+            document.getElementById('editProfileModal').classList.add('show');
+        }
+        
+        function closeEditProfileModal() {
+            document.getElementById('editProfileModal').classList.remove('show');
+            editProfilePhoto = null;
+        }
+        
+        function triggerPhotoUpload() {
+            document.getElementById('photoUploadInput').click();
+        }
+        
+        function handleEditPhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate file
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size must be less than 10MB');
+                return;
+            }
+            
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Only JPG and PNG images are allowed');
+                return;
+            }
+            
+            editProfilePhoto = file;
+            
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('editProfilePhoto').innerHTML = 
+                    `<img src="${e.target.result}" alt="Profile">`;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function submitEditProfile() {
+            const name = document.getElementById('editName').value.trim();
+            const phone = document.getElementById('editPhone').value.trim();
+            const city = document.getElementById('editCity').value;
+            const payment = document.getElementById('editPayment').value;
+            
+            // Validation
+            if (!name || !phone || !city || !payment) {
+                alert('All fields are required!');
+                return;
+            }
+            
+            if (!validatePhone(phone)) {
+                alert('Invalid phone number format. Use 09XXXXXXXX or +251XXXXXXXXX');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('action', 'updateProfile');
+            formData.append('fullName', name);
+            formData.append('phone', phone);
+            formData.append('city', city);
+            formData.append('paymentType', payment);
+            
+            if (editProfilePhoto) {
+                formData.append('photo', editProfilePhoto);
+            }
+            
+            fetch('ProviderServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update session storage
+                    const user = JSON.parse(sessionStorage.getItem('user'));
+                    user.fullName = name;
+                    user.phone = phone;
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    
+                    // Update UI
+                    document.getElementById('providerName').textContent = name;
+                    document.getElementById('sidebarName').textContent = name;
+                    
+                    if (data.photoPath) {
+                        document.getElementById('profilePhoto').innerHTML = 
+                            `<img src="${data.photoPath}" alt="Profile">`;
+                    }
+                    
+                    alert('Profile updated successfully!');
+                    closeEditProfileModal();
+                    loadUserData(); // Refresh all data
+                } else {
+                    alert(data.message || 'Failed to update profile.');
+                }
+            });
+        }
+        
+        function validatePhone(phone) {
+            const phoneRegex = /^(09|\+251)[0-9]{8,9}$/;
+            return phoneRegex.test(phone);
+        }
+        
+        function handleRefresh() {
+            loadBookings();
+            loadUserData();
+            checkNotifications();
+        }
+        
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+        
+        function checkNotifications() {
+            fetch('ProviderServlet?action=checkNotifications')
+                .then(response => response.json())
+                .then(notifications => {
+                    if (notifications.length > 0) {
+                        notifications.forEach(notification => {
+                            showNotification(notification);
+                        });
+                    }
+                });
+        }
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #3498db;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                max-width: 300px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="images/notification-icon.png" alt="Notification" style="width: 20px; height: 20px;">
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .modal-input {
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                font-size: 13px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
